@@ -37,6 +37,10 @@ export function AttendancePage({ students, teachers, attendance, onCreated }) {
     }));
   };
 
+  const selectedStudent = students.find((item) => item.id === form.student_id);
+  const minDate = selectedStudent?.enrollment_date || "";
+  const maxDate = new Date().toISOString().slice(0, 10);
+
   return (
     <div className="two-column">
       <section className="panel">
@@ -85,8 +89,17 @@ export function AttendancePage({ students, teachers, attendance, onCreated }) {
             </label>
           </div>
           <label>
-            日期
-            <input type="date" value={form.checked_at} onChange={(event) => setForm({ ...form, checked_at: event.target.value })} />
+            日期（可补录历史日期）
+            <input
+              type="date"
+              value={form.checked_at}
+              min={minDate}
+              max={maxDate}
+              onChange={(event) => setForm({ ...form, checked_at: event.target.value })}
+            />
+            {selectedStudent?.enrollment_date ? (
+              <span className="muted-text">可选范围：{selectedStudent.enrollment_date} 至 {maxDate}</span>
+            ) : null}
           </label>
           <label>
             备注

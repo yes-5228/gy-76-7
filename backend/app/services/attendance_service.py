@@ -17,13 +17,16 @@ def check_in(payload):
     if hours <= 0:
         raise ValueError("课时必须大于 0")
 
+    checked_at = payload.get("checked_at") or date.today().isoformat()
+    _validate_attendance_date(checked_at, payload["student_id"])
+
     attendance_record = {
         "id": new_id("att"),
         "student_id": payload["student_id"],
         "teacher_id": payload["teacher_id"],
         "course_name": payload["course_name"].strip(),
         "hours": hours,
-        "checked_at": payload.get("checked_at") or date.today().isoformat(),
+        "checked_at": checked_at,
         "note": payload.get("note", "").strip(),
     }
 
@@ -43,6 +46,17 @@ def check_in(payload):
 
     mutate(add_record)
     return attendance_record
+
+
+def _validate_attendance_date(checked_at, student_id):
+    today = date.today().isoformat()
+    if checked_at > today:
+        raise ValueError("签到日期不能晚于当前日期")
+
+    data = read_data()
+    student = next((item for item in data["students"] if item["id"] == student_id), None)
+    if student and student.get("enrollment_date") and checked_at < student["enrollment_date"]:
+        raise ValueError(f"签到日期不能早于学员入学日期（{student['enrollment_date']}）")
 
 
 def _with_names(record, students, teachers):

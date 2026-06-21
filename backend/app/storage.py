@@ -21,6 +21,7 @@ def _default_data():
                 "phone": "13800010001",
                 "course": "少儿编程",
                 "remaining_hours": 6,
+                "enrollment_date": "2026-01-15",
                 "status": "active",
             },
             {
@@ -30,6 +31,7 @@ def _default_data():
                 "phone": "13800010002",
                 "course": "创意美术",
                 "remaining_hours": 3,
+                "enrollment_date": "2026-03-01",
                 "status": "active",
             },
             {
@@ -39,6 +41,7 @@ def _default_data():
                 "phone": "13800010003",
                 "course": "英语启蒙",
                 "remaining_hours": 10,
+                "enrollment_date": "2026-02-20",
                 "status": "active",
             },
         ],
@@ -68,24 +71,6 @@ def _default_data():
             },
         ],
         "payroll_settlements": [],
-        "renewals": [
-            {
-                "id": "ren-001",
-                "student_id": "stu-001",
-                "hours": 12,
-                "amount": 2400,
-                "note": "暑期班续费",
-                "renewed_at": today,
-            },
-            {
-                "id": "ren-002",
-                "student_id": "stu-003",
-                "hours": 20,
-                "amount": 3600,
-                "note": "季度套餐",
-                "renewed_at": today,
-            },
-        ],
     }
 
 
